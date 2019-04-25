@@ -8,6 +8,7 @@
     <meta name="description" content="A simple crud app made with the vue js and django">
     <meta name="keywords" content="vuejs, django, crudapp, restapi">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/app.css"/>
 
 </head>
 
@@ -15,11 +16,11 @@
     <div id="starting">
         <div class="container">
             <div class="row">
-                <iframe width="490" height="307" style = "margin: 50px auto;" src="https://www.youtube.com/embed/I-tboYkOFho" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe width="560" height="315" style="margin: 50px auto;" src="https://www.youtube.com/embed/I-tboYkOFho" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
             <div class="row">
                 <h1>Comments
-                    <button class="btn btn-primary" data-toggle="modal" data-target='#addCommentModal'>Add Comment</button>
+                    <button class="btn btn-primary" data-toggle="modal" data-target='#addArticleModal'>Add Comment</button>
                 </h1>
                 <table class="table">
                     <thead>
@@ -30,35 +31,35 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="comment in comments">
-                            <th scope="row">${Comment.comment_id}</th>
-                            <td>${Comment.comment_body}</td>
+                        <tr v-for="article in articles">
+                            <th scope="row">${article.article_id}</th>
+                            <td>${article.article_body}</td>
                             <td>
-                                <button class="btn btn-info" v-on:click="getComment(comment.comment_id)">Edit</button>
-                                <button class="btn btn-danger" v-on:click="deleteComment(comment.comment_id)">Delete</button>
+                                <button class="btn btn-info" v-on:click="getArticle(article.article_id)">Edit</button>
+                                <button class="btn btn-danger" v-on:click="deleteArticle(article.article_id)">Delete</button>
                             </td>
                         </tr>
                     </tbody>
                 </table>
-                <!-- Add Comment Modal -->
-                <div class="modal fade" id="addCommentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                <!-- Add Article Modal -->
+                <div class="modal fade" id="addArticleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLongTitle">ADD COMMENT</h5>
+                                <h5 class="modal-title" id="exampleModalLongTitle">ADD ARTICLE</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <form v-on:submit.prevent="addComment()">
+                            <form v-on:submit.prevent="addArticle()">
                                 <div class="modal-body">
                                     <div class="form-group">
-                                        <label for="comment_heading">Comment Heading</label>
-                                        <input type="text" class="form-control" id="comment_heading" placeholder="Enter Comment Heading" v-model="newComment.comment_heading" required="required">
+                                        <label for="article_heading">Article Heading</label>
+                                        <input type="text" class="form-control" id="article_heading" placeholder="Enter Article Heading" v-model="newArticle.article_heading" required="required">
                                     </div>
                                     <div class="form-group">
-                                        <label for="comment_body">Comment Body</label>
-                                        <textarea class="form-control" id="comment_body" placeholder="Enter Comment Body" v-model="newComment.comment_body" required="required" rows="3"></textarea>
+                                        <label for="article_body">Article Body</label>
+                                        <textarea class="form-control" id="article_body" placeholder="Enter Article Body" v-model="newArticle.article_body" required="required" rows="3"></textarea>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -70,26 +71,26 @@
                     </div>
                     <div class="loading" v-if="loading===true">Loading&#8230;</div>
                 </div>
-                <!-- End of comment modal -->
-                <!-- Edit Comment Modal -->
-                <div class="modal fade" id="editCommentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                <!-- End of article modal -->
+                <!-- Edit Article Modal -->
+                <div class="modal fade" id="editArticleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLongTitle">EDIT COMMENT</h5>
+                                <h5 class="modal-title" id="exampleModalLongTitle">EDIT ARTICLE</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <form v-on:submit.prevent="updateComment()">
+                            <form v-on:submit.prevent="updateArticle()">
                                 <div class="modal-body">
                                     <div class="form-group">
-                                        <label for="comment_heading">Comment Heading</label>
-                                        <input type="text" class="form-control" id="comment_heading" placeholder="Enter Comment Heading" v-model="currentComment.comment_heading" required="required">
+                                        <label for="article_heading">Article Heading</label>
+                                        <input type="text" class="form-control" id="article_heading" placeholder="Enter Article Heading" v-model="currentArticle.article_heading" required="required">
                                     </div>
                                     <div class="form-group">
-                                        <label for="comment_body">Comment Body</label>
-                                        <textarea class="form-control" id="comment_body" placeholder="Enter Comment Body" v-model="currentComment.comment_body" required="required" rows="3"></textarea>
+                                        <label for="article_body">Article Body</label>
+                                        <textarea class="form-control" id="article_body" placeholder="Enter Article Body" v-model="currentArticle.article_body" required="required" rows="3"></textarea>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -101,7 +102,7 @@
                     </div>
                     <div class="loading" v-if="loading===true">Loading&#8230;</div>
                 </div>
-                <!-- End of edit comment modal -->
+                <!-- End of edit article modal -->
             </div>
         </div>
         <div class="loading" v-if="loading===true">Loading&#8230;</div>
@@ -118,29 +119,29 @@
             el: '#starting',
             delimiters: ['${', '}'],
             data: {
-                comments: [],
+                articles: [],
                 loading: true,
-                currentComment: {},
+                currentArticle: {},
                 message: null,
-                newComment: {
-                    'comment_heading': null,
-                    'comment_body': null
+                newArticle: {
+                    'article_heading': null,
+                    'article_body': null
                 },
                 search_term: '',
             },
             mounted: function() {
-                this.getComments();
+                this.getArticles();
             },
             methods: {
-                getComments: function() {
-                    let api_url = '/api/comment/';
+                getArticles: function() {
+                    let api_url = '/api/article/';
                     if (this.search_term !== '' || this.search_term !== null) {
-                        api_url = `/api/comment/?search=${this.search_term}`
+                        api_url = `/api/article/?search=${this.search_term}`
                     }
                     this.loading = true;
                     this.$http.get(api_url)
                         .then((response) => {
-                            this.comments = response.data;
+                            this.articles = response.data;
                             this.loading = false;
                         })
                         .catch((err) => {
@@ -148,12 +149,12 @@
                             console.log(err);
                         })
                 },
-                getComment: function(id) {
+                getArticle: function(id) {
                     this.loading = true;
-                    this.$http.get(`/api/comment/${id}/`)
+                    this.$http.get(`/api/article/${id}/`)
                         .then((response) => {
-                            this.currentComment = response.data;
-                            $("#editCommentModal").modal('show');
+                            this.currentArticle = response.data;
+                            $("#editArticleModal").modal('show');
                             this.loading = false;
                         })
                         .catch((err) => {
@@ -161,37 +162,37 @@
                             console.log(err);
                         })
                 },
-                addComment: function() {
+                addArticle: function() {
                     this.loading = true;
-                    this.$http.post('/api/comment/', this.newComment)
+                    this.$http.post('/api/article/', this.newArticle)
                         .then((response) => {
                             this.loading = true;
-                            this.getComments();
+                            this.getArticles();
                         })
                         .catch((err) => {
                             this.loading = true;
                             console.log(err);
                         })
                 },
-                updateComment: function() {
+                updateArticle: function() {
                     this.loading = true;
-                    this.$http.put(`/api/comment/${this.currentComment.comment_id}/`, this.currentComment)
+                    this.$http.put(`/api/article/${this.currentArticle.article_id}/`, this.currentArticle)
                         .then((response) => {
                             this.loading = false;
-                            this.currentComment = response.data;
-                            this.getComments();
+                            this.currentArticle = response.data;
+                            this.getArticles();
                         })
                         .catch((err) => {
                             this.loading = false;
                             console.log(err);
                         })
                 },
-                deleteComment: function(id) {
+                deleteArticle: function(id) {
                     this.loading = true;
-                    this.$http.delete(`/api/comment/${id}/`)
+                    this.$http.delete(`/api/article/${id}/`)
                         .then((response) => {
                             this.loading = false;
-                            this.getComments();
+                            this.getArticles();
                         })
                         .catch((err) => {
                             this.loading = false;
