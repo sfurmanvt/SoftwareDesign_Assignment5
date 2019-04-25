@@ -20,58 +20,64 @@ class Permission():
         and self.canView == other.canEdit
         and self.canShare == other.canShare)
 
-    def setEdit(value):
+    def __gt__(self, other):
+        return self.name > other.name
+
+    def setEdit(self, value):
         self.canEdit = value
     
-    def getEdit():
+    def getEdit(self):
         return self.canEdit
     
-    def setView(value):
+    def setView(self, value):
         self.canView = value
     
-    def getView():
+    def getView(self):
         return self.canView
     
-    def setShare(value):
+    def setShare(self, value):
         self.canShare = value
     
-    def getShare():
+    def getShare(self):
         return self.canShare
     
-    def getAll():
+    def getAll(self):
         return (self.canEdit, self.canView, self.canShare)
 
-    def setName(name):
+    def setName(self, name):
         self.name = name
     
-    def getName():
+    def getName(self):
         return self.name
 
 class Profile():
     def __init__(self, *args, **kwargs):
         self.permissions = kwargs.get('permissions', [])
-        self.comments = kwargs.get('comments', [])
+        self.comments = []
         
     def __eq__(self, other):
         return (sorted(self.permissions) == sorted(other.permissions)
         and sorted(self.comments) == sorted(other.comments))
 
-    def addPermission(permission):
-        self.permissions = permission
+    def addPermission(self, permission):
+        self.permissions.append(permission)
 
-    def deletePermission(permission):
+    def deletePermission(self, permission):
         if permission in self.permissions:
-            self.premissions.remove(permission)
+            self.permissions.remove(permission)
+    
+    def getPermissions(self):
+        return self.permissions
 
-    def addComment(comment):
+    def addComment(self, comment):
         self.comments.append(comment)
 
-    def deleteComment(comment):
+    def deleteComment(self, comment):
         if comment in self.comments:
-            self.coments.remove(comment)
-    
-    def getComposer():
-        return self.composer
+            self.comments.remove(comment)
+
+    def getComments(self):
+        return self.comments
 
 class Composer():
     def __init__(self, username, password):
@@ -82,35 +88,36 @@ class Composer():
         self.reviews = [] 
     
     def __eq__(self, other):
-        return (self.username == other.username
-        and self.password == other.password
-        and self.profile == other.profile
-        and sorted(self.compositions) == sorted(other.compositions)
-        and sorted(self.reviews) == sorted(other.reviews))
+        return self.username == other.username
 
-
-    def getUsername():
+    def getUsername(self):
         return self.username
     
-    def getPassword():
+    def getPassword(self):
         return self.password
 
-    def getProfile():
+    def getProfile(self):
         return self.profile
 
-    def setProfile(profile):
+    def setProfile(self, profile):
         self.profile = profile
 
-    def addComposition(composition):
+    def addComposition(self, composition):
         compositions.append(composition)
 
-    def deleteComposition(composition):
+    def deleteComposition(self, composition):
         if delComposition in self.compositions:
             self.compositions.remove(composition)
 
-    def addReview(review):
+    def getCompositions(self):
+        return self.compositions
+
+    def addReview(self, review):
         reviews.append(review)
     
-    def deleteReview(review):
+    def deleteReview(self, review):
         if review in self.reviews:
             self.reviews.remove(review)
+    
+    def getReview(self):
+        return self.reviews

@@ -75,33 +75,86 @@ class TestUser(unittest.TestCase):
         self.permA = User.Permission('test', view=True)
         self.permB = User.Permission('test')
         self.permC = User.Permission('test')
+        self.permD = User.Permission('new')
+        
+        self.profA = User.Profile(permissions = [self.permA])
+        self.profB = User.Profile(permissions = [self.permB])
+        self.profC = User.Profile(permissions = [self.permC])
+        self.profD = User.Profile(permissions = [self.permC])
+
+        self.commentA = TextBlobs.Comment(self.profA, text='I am Comment')
+        self.commentB = TextBlobs.Comment(self.profC, text='I am diff Comment')
+
+        self.composerA = User.Composer('admin', 'passwd')
+        self.composerB = User.Composer('admin', 'no')
+        self.composerC = User.Composer('user', 'asdfg')
     
-    def testEquals(self):
+    def testPermissionEquals(self):
         self.assertTrue(self.permA != self.permB)
         self.assertTrue(self.permB == self.permC)
     
-    def testEdit(self):
+    def testPermissionEdit(self):
         self.assertTrue(self.permA.getEdit() == False)
         self.permA.setEdit(True)
         self.assertTrue(self.permA.getEdit() == True)
     
-    def testView(self):
+    def testPermissionView(self):
         self.assertTrue(self.permA.getView() == True)
         self.permA.setView(False)
         self.assertTrue(self.permA.getView() == False)
     
-    def testShare(self):
+    def testPermissionShare(self):
         self.assertTrue(self.permA.getShare() == False)
         self.permA.setShare(True)
         self.assertTrue(self.permA.getShare() == True)
     
-    def testAll(self):
-        self.assertTrue(self.permA.getAll() == (False, True, Falses))
+    def testPermissionAll(self):
+        self.assertTrue(self.permA.getAll() == (False, True, False))
 
-    def testName(self):
+    def testPermissionName(self):
         self.assertTrue(self.permA.getName() == 'test')
         self.permA.setName('new')
         self.assertTrue(self.permA.getName() == 'new')
+    
+    def testProfileEquals(self):
+        self.profB.addComment(self.commentA)
+        self.profC.addComment(self.commentA)
+        self.assertTrue(self.profB == self.profC)
+        self.profC.addComment(self.commentB)
+        self.assertFalse(self.profB == self.profC)
+
+    def testProfilePermission(self):
+        self.assertTrue(self.permA in self.profA.getPermissions())
+        self.assertTrue(self.permD not in self.profA.getPermissions())
+        self.profA.addPermission(self.permD)
+        self.assertTrue(self.permD in self.profA.getPermissions())
+        self.profA.deletePermission(self.permA)
+        self.assertTrue(self.permA not in self.profA.getPermissions())
+
+    def testProfileComments(self):
+        self.assertTrue(self.commentA not in self.profA.getComments())
+        self.profA.addComment(self.commentA)
+        self.assertTrue(self.commentA in self.profA.getComments())
+        self.profA.deleteComment(self.commentA)
+        self.assertTrue(self.commentA not in self.profA.getComments())
+    
+    def testComposerUsername(self):
+        self.assertTrue(self.composerA == self.composerB)
+        self.assertTrue(self.composerA != self.composerC)
+
+    def testComposerPassword(self):
+        self.assertTrue(self.composerA.getPassword() == 'passwd')
+    
+    def testComposerProfile(self):
+        self.assertTrue(self.composerA.getProfile() == None)
+        self.composerA.setProfile(self.profA)
+        self.assertTrue(self.composerA.getProfile() == self.profA)
+    
+    def testComposerCompositons(self):
+        
+    
+    def testComposerReviews(self):
+
 
     def tearDown(self):
         pass
