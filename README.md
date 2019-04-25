@@ -8,12 +8,16 @@
 | Hayden Cleek    | hmcleek@vt.edu |
 | Daniel Medas    | dmedas@vt.edu  |    
    
-
-
-
 <br>
-
 
 <h1>Project Information</h1>
 
 Software Design Assignment 5, Collaborative Music Composer
+
+<h1>Code Structure</h1>
+
+Code matching our detailed class diagram is found within the BackEnd Directory.
+
+The 25 unit tests are executed to test backend methods.
+
+Front End directory is used for the demonstration of our product.

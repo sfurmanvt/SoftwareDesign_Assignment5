@@ -1,3 +1,6 @@
+"""
+"""
+
 class Permission(): 
     def __init__(self, name):
         self.name = name
@@ -12,14 +15,12 @@ class Permission():
         and self.canShare == other.canShare)
 
 class Profile():
-    def __init__(self, composer, *args, **kwargs):
-        self.composer = composer
+    def __init__(self, *args, **kwargs):
         self.permissions = kwargs.get('permissions', [])
         self.comments = kwargs.get('comments', [])
         
     def __eq__(self, other):
-        return (self.composer == other.composer
-        and sorted(self.permissions) == sorted(other.permissions)
+        return (sorted(self.permissions) == sorted(other.permissions)
         and sorted(self.comments) == sorted(other.comments))
 
     def addPermission(permission):
