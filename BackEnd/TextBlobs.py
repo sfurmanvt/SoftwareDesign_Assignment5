@@ -1,3 +1,6 @@
+"""
+"""
+
 class TextBlob():
     def __init__(self, *args, **kwargs):
         self.text = kwargs.get('text', '')
@@ -5,10 +8,10 @@ class TextBlob():
     def __eq__(self,other):
         return (self.text == other.text)
 
-    def getText():
+    def getText(self):
         return self.text
 
-    def setText(text):
+    def setText(self, text):
         self.text = text
 
 class Description(TextBlob):
@@ -23,7 +26,11 @@ class Comment(TextBlob):
         self.profile = profile
         super().__init__(self, *args, **kwargs)
 
-    def getProfile():
+    def __eq__(self, other):
+        return (self.profile == other.profile
+        and self.text == other.text)
+
+    def getProfile(self):
         return self.profile
 
 class Review():
@@ -35,15 +42,15 @@ class Review():
         return (self.rating == other.rating 
         and self.comment == other.comment)
 
-    def getRating():
+    def getRating(self):
         return self.rating
 
-    def setRating(rating):
+    def setRating(self, rating):
         self.rating = rating
 
-    def getComment():
+    def getComment(self):
         return self.comment
 
-    def setComment(comment):
+    def setComment(self, comment):
         self.comment = comment
 

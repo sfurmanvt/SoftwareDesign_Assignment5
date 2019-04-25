@@ -1,9 +1,18 @@
+"""
+AUTHOR: Virginia Tech Lacrosse Team
+
+Functionality for storing and manipulating compositions
+
+DIFFERENCES FROM CLASS DIAGRAM:
+
+"""
+
 class Permission(): 
-    def __init__(self, name):
+    def __init__(self, name, edit=False, view=False, share=False):
         self.name = name
-        self.canEdit = False
-        self.canView = False
-        self.canShare = False
+        self.canEdit = edit
+        self.canView = view
+        self.canShare = share
 
     def __eq__(self, other):
         return (self.name == other.name
@@ -11,15 +20,40 @@ class Permission():
         and self.canView == other.canEdit
         and self.canShare == other.canShare)
 
+    def setEdit(value):
+        self.canEdit = value
+    
+    def getEdit():
+        return self.canEdit
+    
+    def setView(value):
+        self.canView = value
+    
+    def getView():
+        return self.canView
+    
+    def setShare(value):
+        self.canShare = value
+    
+    def getShare():
+        return self.canShare
+    
+    def getAll():
+        return (self.canEdit, self.canView, self.canShare)
+
+    def setName(name):
+        self.name = name
+    
+    def getName():
+        return self.name
+
 class Profile():
-    def __init__(self, composer, *args, **kwargs):
-        self.composer = composer
+    def __init__(self, *args, **kwargs):
         self.permissions = kwargs.get('permissions', [])
         self.comments = kwargs.get('comments', [])
         
     def __eq__(self, other):
-        return (self.composer == other.composer
-        and sorted(self.permissions) == sorted(other.permissions)
+        return (sorted(self.permissions) == sorted(other.permissions)
         and sorted(self.comments) == sorted(other.comments))
 
     def addPermission(permission):
