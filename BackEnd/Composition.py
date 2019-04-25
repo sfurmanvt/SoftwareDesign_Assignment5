@@ -1,4 +1,10 @@
 """
+AUTHOR: Virginia Tech Lacrosse Team
+
+Functionality for storing and manipulating compositions
+
+DIFFERENCES FROM CLASS DIAGRAM:
+
 """
 
 class Instrument():
