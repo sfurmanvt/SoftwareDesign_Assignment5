@@ -14,6 +14,14 @@
 
 Software Design Assignment 5, Collaborative Music Composer
 
+Use Cases Covered:
+
+Add Comment
+Remove Comment
+Edit Comment
+Add Profile
+Edit Profile
+
 <h1>Code Structure</h1>
 
 Code matching our detailed class diagram is found within the BackEnd Directory.
@@ -24,8 +32,17 @@ Front End directory is used for the demonstration of our product.
 
 <h1>Running Tests</h1>
 
+Code is written in python3.
+
+You might need to run the following to resolve dependencies: 
+
+"pip install pygame"
+
+"pip install scipy" 
+
+"pip install numpy" 
+
 run UnitTest.py from the command line using "python UnitTest.py" from within the
+SoftwareDesign_Assignment5 folder.  
 
-root directory of the project folder.  You might need to run "pip install pygame"
-
-to resolve all of the dependencies
+(use pip3 and python3 if on mac or linux or you already have python as python2)
