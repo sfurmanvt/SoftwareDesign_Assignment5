@@ -2,17 +2,44 @@
 """
 
 class Permission(): 
-    def __init__(self, name):
+    def __init__(self, name, edit=False, view=False, share=False):
         self.name = name
-        self.canEdit = False
-        self.canView = False
-        self.canShare = False
+        self.canEdit = edit
+        self.canView = view
+        self.canShare = share
 
     def __eq__(self, other):
         return (self.name == other.name
         and self.canEdit == other.canEdit
         and self.canView == other.canEdit
         and self.canShare == other.canShare)
+
+    def setEdit(value):
+        self.canEdit = value
+    
+    def getEdit():
+        return self.canEdit
+    
+    def setView(value):
+        self.canView = value
+    
+    def getView():
+        return self.canView
+    
+    def setShare(value):
+        self.canShare = value
+    
+    def getShare():
+        return self.canShare
+    
+    def getAll():
+        return (self.canEdit, self.canView, self.canShare)
+
+    def setName(name):
+        self.name = name
+    
+    def getName():
+        return self.name
 
 class Profile():
     def __init__(self, *args, **kwargs):

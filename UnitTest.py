@@ -49,7 +49,36 @@ class TestTextBlobs(unittest.TestCase):
 
 class TestUser(unittest.TestCase):
     def setUp(self):
-        pass
+        self.permA = User.Permission('test', view=True)
+        self.permB = User.Permission('test')
+        self.permC = User.Permission('test')
+    
+    def testEquals(self):
+        self.assertTrue(self.permA != self.permB)
+        self.assertTrue(self.permB == self.permC)
+    
+    def testEdit(self):
+        self.assertTrue(self.permA.getEdit() == False)
+        self.permA.setEdit(True)
+        self.assertTrue(self.permA.getEdit() == True)
+    
+    def testView(self):
+        self.assertTrue(self.permA.getView() == True)
+        self.permA.setView(False)
+        self.assertTrue(self.permA.getView() == False)
+    
+    def testShare(self):
+        self.assertTrue(self.permA.getShare() == False)
+        self.permA.setShare(True)
+        self.assertTrue(self.permA.getShare() == True)
+    
+    def testAll(self):
+        self.assertTrue(self.permA.getAll() == (False, True, Falses))
+
+    def testName(self):
+        self.assertTrue(self.permA.getName() == 'test')
+        self.permA.setName('new')
+        self.assertTrue(self.permA.getName() == 'new')
 
     def tearDown(self):
         pass
