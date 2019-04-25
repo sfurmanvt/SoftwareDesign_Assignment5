@@ -103,21 +103,21 @@ class Composer():
         self.profile = profile
 
     def addComposition(self, composition):
-        compositions.append(composition)
+        self.compositions.append(composition)
 
     def deleteComposition(self, composition):
-        if delComposition in self.compositions:
+        if composition in self.compositions:
             self.compositions.remove(composition)
 
     def getCompositions(self):
         return self.compositions
 
     def addReview(self, review):
-        reviews.append(review)
+        self.reviews.append(review)
     
     def deleteReview(self, review):
         if review in self.reviews:
             self.reviews.remove(review)
     
-    def getReview(self):
+    def getReviews(self):
         return self.reviews

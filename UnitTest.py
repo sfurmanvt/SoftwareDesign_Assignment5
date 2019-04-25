@@ -90,7 +90,10 @@ class TestUser(unittest.TestCase):
         self.composerA = User.Composer('admin', 'passwd')
         self.composerB = User.Composer('admin', 'no')
         self.composerC = User.Composer('user', 'asdfg')
-    
+
+        self.compositionA = Composition.Composition(description = TextBlobs.Description(text='test'))
+        self.reviewA = TextBlobs.Review(7, comment=self.commentA)
+
     def testPermissionEquals(self):
         self.assertTrue(self.permA != self.permB)
         self.assertTrue(self.permB == self.permC)
@@ -139,6 +142,10 @@ class TestUser(unittest.TestCase):
         self.assertTrue(self.commentA in self.profA.getComments())
         self.profA.deleteComment(self.commentA)
         self.assertTrue(self.commentA not in self.profA.getComments())
+
+    def testComposerEquals(self):
+        self.assertTrue(self.composerA == self.composerB)
+        self.assertTrue(self.composerA != self.composerC)
     
     def testComposerUsername(self):
         self.assertTrue(self.composerA == self.composerB)
@@ -152,11 +159,19 @@ class TestUser(unittest.TestCase):
         self.composerA.setProfile(self.profA)
         self.assertTrue(self.composerA.getProfile() == self.profA)
     
-    def testComposerCompositons(self):
-        
-    
-    def testComposerReviews(self):
+    def testComposerCompositions(self):
+        self.assertTrue(self.compositionA not in self.composerA.getCompositions())
+        self.composerA.addComposition(self.compositionA)
+        self.assertTrue(self.compositionA in self.composerA.getCompositions())
+        self.composerA.deleteComposition(self.compositionA)
+        self.assertTrue(self.compositionA not in self.composerA.getCompositions())
 
+    def testComposerReviews(self):
+        self.assertTrue(self.reviewA not in self.composerA.getReviews())
+        self.composerA.addReview(self.reviewA)
+        self.assertTrue(self.reviewA in self.composerA.getReviews())
+        self.composerA.deleteReview(self.reviewA)
+        self.assertTrue(self.reviewA not in self.composerA.getReviews())
 
     def tearDown(self):
         pass
@@ -204,14 +219,6 @@ class TestComposition(unittest.TestCase):
         self.simpleNote.setFrequency(21)
         self.assertEqual(self.simpleNote.getNoteLetter(), ('E', 0))
     
-    def tearDown(self):
-        pass
-
-
-class TestMusic(unittest.TestCase):
-    def setUp(self):
-        pass
-
     def tearDown(self):
         pass
 
