@@ -242,10 +242,9 @@ class TestComposition(unittest.TestCase):
         self.simpleMeasure.addNote(self.quarterNote)
         self.simpleMeasure.addNote(self.quarterNote)
         self.simpleMeasure.addNote(self.quarterNote)
-        assertEqual(self.simpleMeasure.notesDuration, 3/4)
-
+        self.assertEqual(self.simpleMeasure.notesDuration, 3/4)
         self.simpleMeasure.addNote(self.quarterNote)
-        assertEqual(self.simpleMeasure.notesDuration, 3/4)
+        self.assertEqual(self.simpleMeasure.notesDuration, 3/4)
 
     def testMeasureRemoveNote(self):
         self.simpleMeasure.setTimeSignature(3/4)
@@ -255,16 +254,16 @@ class TestComposition(unittest.TestCase):
         self.assertEqual(len(self.simpleMeasure.notes), 0)
     
     def testCompositionAddMeasure(self):
-        self.assertEqual(len(self.simpleComposition.getMeasures), 0)
+        self.assertEqual(len(self.simpleComposition.getMeasures()), 0)
         self.simpleComposition.addMeasure(self.simpleMeasure)
-        self.assertEqual(len(self.simpleComposition.getMeasures), 1)
+        self.assertEqual(len(self.simpleComposition.getMeasures()), 1)
 
     def testCompositionDeleteMeasure(self):
-        self.assertEqual(len(self.simpleComposition.getMeasures), 0)
+        self.assertEqual(len(self.simpleComposition.getMeasures()), 0)
         self.simpleComposition.addMeasure(self.simpleMeasure)
-        self.assertEqual(len(self.simpleComposition.getMeasures), 1)
+        self.assertEqual(len(self.simpleComposition.getMeasures()), 1)
         self.simpleComposition.deleteMesure(self.simpleMeasure)
-        self.assertEqual(len(self.simpleComposition.getMeasures), 0)
+        self.assertEqual(len(self.simpleComposition.getMeasures()), 0)
 
 
     def tearDown(self):

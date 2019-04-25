@@ -149,7 +149,7 @@ class Measure():
         self.timeSignature = timeSignature
 
     def addNote(self, note):
-        if note.getDuration + self.notesDuration < self.timeSignature:
+        if note.getDuration() + self.notesDuration <= self.timeSignature:
             self.notes.append(note)
             self.notesDuration += note.getDuration()
 
