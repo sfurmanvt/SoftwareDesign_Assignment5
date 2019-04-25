@@ -30,7 +30,7 @@ class Comment(TextBlob):
         return (self.profile == other.profile
         and self.text == other.text)
 
-    def getProfile():
+    def getProfile(self):
         return self.profile
 
 class Review():
