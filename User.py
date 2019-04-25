@@ -30,7 +30,7 @@ class Profile():
             self.premissions.remove(permission)
 
     def addComment(comment):
-        self.comment.append(comment)
+        self.comments.append(comment)
 
     def deleteComment(comment):
         if comment in self.comments:
