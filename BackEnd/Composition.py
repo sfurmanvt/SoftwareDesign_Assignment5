@@ -6,15 +6,18 @@ Functionality for storing and manipulating compositions
 DIFFERENCES FROM CLASS DIAGRAM:
 
 """
+from scipy.io.wavfile import read
+import numpy as np
 
 class Instrument():
-    def __init__(self, name, audio):
+    def __init__(self, name, audioFile):
         self.name = name
-        self.audio = audio
+        self.audio = np.array(read(audioFile)[1],dtype=float)
 
     def __eq__(self, other):
         return (self.name == other.name)
-    def getSound():
+    
+    def getSound(self):
         return self.audio
 
 class Note():

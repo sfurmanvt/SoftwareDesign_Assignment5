@@ -8,6 +8,9 @@ class TextBlob():
     def __eq__(self,other):
         return (self.text == other.text)
 
+    def __gt__(self, other):
+        return self.text > other.text
+
     def getText(self):
         return self.text
 

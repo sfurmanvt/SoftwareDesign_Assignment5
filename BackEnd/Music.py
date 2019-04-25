@@ -22,15 +22,21 @@ class Track():
     def getFile(self):
         return self.file
 
+    def getTitle(self):
+        return self.title
+    
+    def getArtist(self):
+        return self.artist
+    
+    def getGenre(self):
+        return self.genre
+
 class Player():
     def __init__(self, *args, **kwargs):
         self.playPos = 0
         self.tracks = []
         self.numTracks = 0
         mixer.init()
-
-    def __eq__(self, other):
-        return (sorted(self.tracks) == sorted(other.tracks)) 
 
     def addTrack(self, track):
         self.tracks.append(track)
