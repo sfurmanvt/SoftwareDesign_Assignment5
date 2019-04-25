@@ -122,8 +122,6 @@ class TestComposition(unittest.TestCase):
         self.simpleNote.setFrequency(21)
         self.assertEqual(self.simpleNote.getNoteLetter(), ('E', 0))
     
-
-    
     def tearDown(self):
         pass
 
