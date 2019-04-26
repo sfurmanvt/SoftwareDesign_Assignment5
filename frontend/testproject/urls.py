@@ -21,4 +21,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     path('article', TemplateView.as_view(template_name='index.html')),
+    path('composition', TemplateView.as_view(template_name='index.html')),
+    path('signup', TemplateView.as_view(template_name='signup.html')),
+    path('profile', TemplateView.as_view(template_name='profile.html')),
+    path('login', TemplateView.as_view(template_name='login.html')),
+    path('', TemplateView.as_view(template_name='login.html')),
 ]
