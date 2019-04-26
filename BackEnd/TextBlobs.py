@@ -1,4 +1,19 @@
 """
+AUTHOR: Virginia Tech Lacrosse Team
+
+Functionality for storing and manipulating text information
+
+DIFFERENCES FROM CLASS DIAGRAM:
+
+__eq__ methods added across each of the classes to allow for comparison
+Overloaded Constructors accomplished through python's kwargs system
+(you can pass in a variable number of keyworded arguments)
+
+TextBlob:
+    gt added to enable sorting
+    
+Review:
+    Review No Longer inherits from TextBlob, it only needs to store a comment
 """
 
 class TextBlob():
