@@ -44,6 +44,16 @@ You might need to run the following to resolve dependencies:
 
 "pip install numpy" 
 
+"pip install Django"
+
+"pip install djangorestframework"
+
+Alternatively you can install all of the requirements by running
+
+"pip install -r requirements.txt"
+
+This uses the requirements.txt in the root directory of the repository to install dependencies
+
 run UnitTest.py from the command line using "python UnitTest.py" from within the
 SoftwareDesign_Assignment5 folder.  
 
