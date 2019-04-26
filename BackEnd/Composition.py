@@ -5,6 +5,17 @@ Functionality for storing and manipulating compositions
 
 DIFFERENCES FROM CLASS DIAGRAM:
 
+__eq__ methods added across each of the classes to allow for comparison
+Overloaded Constructors accomplished through python's kwargs system
+(you can pass in a variable number of keyworded arguments)
+
+Note:
+    startingTime renamed to starting Beat For Clarity
+    Added ability to translate frequency into its corresponding note letter
+Compostion:
+    Added member variable to track bpm and corresponding getters and setters
+
+
 """
 from scipy.io.wavfile import read
 import numpy as np
@@ -149,7 +160,7 @@ class Measure():
         self.timeSignature = timeSignature
 
     def addNote(self, note):
-        if note.getDuration + self.notesDuration < self.timeSignature:
+        if note.getDuration() + self.notesDuration <= self.timeSignature:
             self.notes.append(note)
             self.notesDuration += note.getDuration()
 

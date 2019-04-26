@@ -177,6 +177,7 @@ class TestComposition(unittest.TestCase):
     def setUp(self):
         self.simpleInstrument = Composition.Instrument('kittens', 'BackEnd/WavInstrument/cat_kitten.wav')
         self.simpleNote = Composition.Note(instrument = self.simpleInstrument)
+        self.quarterNote = Composition.Note(instrument = self.simpleInstrument, duration=1/4)
         self.simpleMeasure = Composition.Measure(Composition.Note(instrument = self.simpleInstrument, startingBeat = 0, duration = 1/4)) 
         self.simpleComposition = Composition.Composition(description = TextBlobs.Description(text='I am a simple description'))
     
@@ -216,6 +217,52 @@ class TestComposition(unittest.TestCase):
         self.simpleNote.setFrequency(21)
         self.assertEqual(self.simpleNote.getNoteLetter(), ('E', 0))
     
+    def testMeasureGetKeySignature(self):
+        self.assertEqual(self.simpleMeasure.getKeySignature(), None)
+
+    def testMeasureSetKeySignature(self):
+        self.assertEqual(self.simpleMeasure.getKeySignature(), None)
+        self.simpleMeasure.setKeySignature(('C', 'flat', 'major'))
+        self.assertEqual(self.simpleMeasure.getKeySignature(), ('C', 'flat', 'major'))
+
+    def testMeasureGetTimeSignature(self):
+        self.assertEqual(self.simpleMeasure.getTimeSignature(), None)
+
+    def testMeasureSetTimeSignature(self):
+        self.assertEqual(self.simpleMeasure.getTimeSignature(), None)
+        self.simpleMeasure.setTimeSignature(3/4)
+        self.assertEqual(self.simpleMeasure.getTimeSignature(), 3/4)
+
+    def testMeasureAddNote(self):
+        self.simpleMeasure.setTimeSignature(3/4)
+        self.assertEqual(len(self.simpleMeasure.notes), 0)
+        self.simpleMeasure.addNote(self.quarterNote)
+        self.simpleMeasure.addNote(self.quarterNote)
+        self.simpleMeasure.addNote(self.quarterNote)
+        self.assertEqual(self.simpleMeasure.notesDuration, 3/4)
+        self.simpleMeasure.addNote(self.quarterNote)
+        self.assertEqual(self.simpleMeasure.notesDuration, 3/4)
+
+    def testMeasureRemoveNote(self):
+        self.simpleMeasure.setTimeSignature(3/4)
+        self.assertEqual(len(self.simpleMeasure.notes), 0)
+        self.simpleMeasure.addNote(self.quarterNote)
+        self.simpleMeasure.removeNote(self.quarterNote)
+        self.assertEqual(len(self.simpleMeasure.notes), 0)
+    
+    def testCompositionAddMeasure(self):
+        self.assertEqual(len(self.simpleComposition.getMeasures()), 0)
+        self.simpleComposition.addMeasure(self.simpleMeasure)
+        self.assertEqual(len(self.simpleComposition.getMeasures()), 1)
+
+    def testCompositionDeleteMeasure(self):
+        self.assertEqual(len(self.simpleComposition.getMeasures()), 0)
+        self.simpleComposition.addMeasure(self.simpleMeasure)
+        self.assertEqual(len(self.simpleComposition.getMeasures()), 1)
+        self.simpleComposition.deleteMesure(self.simpleMeasure)
+        self.assertEqual(len(self.simpleComposition.getMeasures()), 0)
+
+
     def tearDown(self):
         pass
 
