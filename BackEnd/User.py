@@ -4,6 +4,9 @@ AUTHOR: Virginia Tech Lacrosse Team
 Functionality for storing and manipulating compositions
 
 DIFFERENCES FROM CLASS DIAGRAM:
+Getter methods had to be added to Composer to allow for the adding and deletion methods to be tested.
+Getter methods had to be added to Profile to allow for its addition and deletion methods to be tested.
+Composer was removed from Profile due to a recursive definition loop between them.
 
 """
 
@@ -40,12 +43,6 @@ class Permission():
     
     def getShare(self):
         return self.canShare
-    
-    def getAll(self):
-        return (self.canEdit, self.canView, self.canShare)
-
-    def setName(self, name):
-        self.name = name
     
     def getName(self):
         return self.name
