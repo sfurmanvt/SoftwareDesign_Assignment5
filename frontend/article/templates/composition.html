@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Vue-js | Django | Crud App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A simple crud app made with the vue js and django">
+    <meta name="keywords" content="vuejs, django, crudapp, restapi">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand">SynCompose</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/mozart">Profile</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Actions
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="/composition">Compositions</a>
+                            <a class="dropdown-item" href="#">Instruments</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/composition">Recent Notification</a>
+                        </div>
+                    </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <a class="btn btn-primary" href="/">Logout</a>
+                </form>
+            </div>
+        </nav>
+    </header>
+    <div id="starting">
+        <div class="container">
+            <div class="row">
+                <iframe width="560" height="315" style="margin: 50px auto;" src="https://www.youtube.com/embed/I-tboYkOFho" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="row">
+                <h1>Comments
+                    <button class="btn btn-primary" data-toggle="modal" data-target='#addCommentModal'>Add Comment</button>
+                </h1>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Commenter Name</th>
+                            <th scope="col">Comment</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="article in articles">
+                            <th scope="row"><a href="beethoven">${article.article_heading}</a></th>
+                            <td>${article.article_body}</td>
+                            <td>
+                                <button class="btn btn-info" v-on:click="getArticle(article.article_id)">Edit</button>
+                                <button class="btn btn-danger" data-toggle="modal" v-on:click='getArticleDelete(article.article_id)'>Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- Add Article Modal -->
+                <div class="modal fade" id="addCommentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">ADD COMMENT</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <form v-on:submit.prevent="addComment()">
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label for="article_heading">Comment Name</label>
+                                        <input type="text" class="form-control" id="article_heading" placeholder="Who are you?" v-model="newArticle.article_heading" required="required">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="article_body">Comment</label>
+                                        <textarea class="form-control" id="article_body" placeholder="Enter Comment" v-model="newArticle.article_body" required="required" rows="3"></textarea>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="loading" v-if="loading===true">Loading&#8230;</div>
+                </div>
+                <!-- End of article modal -->
+                <!-- Edit Article Modal -->
+                <div class="modal fade" id="editCommentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">EDIT COMMENT</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <form v-on:submit.prevent="updateArticle()">
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label for="article_heading">Commenter Name</label>
+                                        <input type="text" class="form-control" id="article_heading" readonly v-model="currentArticle.article_heading" required="required">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="article_body">Comment</label>
+                                        <textarea class="form-control" id="article_body" placeholder="Enter Article Body" v-model="currentArticle.article_body" required="required" rows="3"></textarea>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary m-progress" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="loading" v-if="loading===true">Loading&#8230;</div>
+                </div>
+                <!-- End of edit article modal -->
+
+                <div class="modal fade" id="deleteCommentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content" style="padding: 30px 50px;">
+                            <h3>Are you sure you want to delete?</h3>
+                            <form v-on:submit.prevent="deleteArticle()">
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label for="article_heading">Commenter Name</label>
+                                        <input type="text" class="form-control" id="article_heading" readonly v-model="currentArticle.article_heading" required="required">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="article_body">Comment</label>
+                                        <textarea class="form-control" id="article_body" placeholder="Enter Article Body" readonly v-model="currentArticle.article_body" required="required" rows="3"></textarea>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary m-progress" data-dismiss="modal">No</button>
+                                    <button type="submit" class="btn btn-danger">Yes</button>
+                                </div>
+                            </form>
+                            <div class="loading" v-if="loading===true">Loading&#8230;</div>
+                        </div>
+
+                    </div>
+                    <div class="loading" v-if="loading===true">Loading&#8230;</div>
+                </div>
+                <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+                <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.3.5"></script>
+                <script type="text/javascript">
+                    Vue.http.headers.common['X-CSRFToken'] = "{{ csrf_token }}";
+                    new Vue({
+                        el: '#starting',
+                        delimiters: ['${', '}'],
+                        data: {
+                            articles: [],
+                            loading: true,
+                            currentArticle: {},
+                            message: null,
+                            newArticle: {
+                                'article_heading': null,
+                                'article_body': null
+                            },
+                            search_term: '',
+                        },
+                        mounted: function() {
+                            this.getArticles();
+                        },
+                        methods: {
+                            getArticles: function() {
+                                let api_url = '/api/article/';
+                                if (this.search_term !== '' || this.search_term !== null) {
+                                    api_url = `/api/article/?search=${this.search_term}`
+                                }
+                                this.loading = true;
+                                this.$http.get(api_url)
+                                    .then((response) => {
+                                        this.articles = response.data;
+                                        this.loading = false;
+                                    })
+                                    .catch((err) => {
+                                        this.loading = false;
+                                        console.log(err);
+                                    })
+                            },
+                            getArticle: function(id) {
+                                this.loading = true;
+                                this.$http.get(`/api/article/${id}/`)
+                                    .then((response) => {
+                                        this.currentArticle = response.data;
+                                        $("#editCommentModal").modal('show');
+                                        this.loading = false;
+                                    })
+                                    .catch((err) => {
+                                        this.loading = false;
+                                        console.log(err);
+                                    })
+                            },
+                            getArticleDelete: function(id) {
+                                this.loading = true;
+                                this.$http.get(`/api/article/${id}/`)
+                                    .then((response) => {
+                                        this.currentArticle = response.data;
+                                        $("#deleteCommentModal").modal('show');
+                                        this.loading = false;
+                                    })
+                                    .catch((err) => {
+                                        this.loading = false;
+                                        console.log(err);
+                                    })
+                            },
+                            addComment: function() {
+                                this.loading = true;
+                                this.$http.post('/api/article/', this.newArticle)
+                                    .then((response) => {
+                                        this.loading = true;
+                                        this.getArticles();
+                                    })
+                                    .catch((err) => {
+                                        this.loading = true;
+                                        console.log(err);
+                                    })
+                            },
+                            updateArticle: function() {
+                                this.loading = true;
+                                this.$http.put(`/api/article/${this.currentArticle.article_id}/`, this.currentArticle)
+                                    .then((response) => {
+                                        this.loading = false;
+                                        this.currentArticle = response.data;
+                                        this.getArticles();
+                                    })
+                                    .catch((err) => {
+                                        this.loading = false;
+                                        console.log(err);
+                                    })
+                            },
+                            deleteArticle: function(id) {
+                                this.loading = true;
+                                this.$http.delete(`/api/article/${this.currentArticle.article_id}/`, this.currentArticle)
+                                    .then((response) => {
+                                        this.loading = false;
+                                        this.getArticles();
+                                    })
+                                    .catch((err) => {
+                                        this.loading = false;
+                                        console.log(err);
+                                    })
+                            }
+                        }
+                    });
+                </script>
+</body>
+
+</html>
