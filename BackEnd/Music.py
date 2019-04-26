@@ -4,7 +4,13 @@ AUTHOR: Virginia Tech Lacrosse Team
 Functionality for storing and manipulating compositions
 
 DIFFERENCES FROM CLASS DIAGRAM:
-
+This class is new, due to a switch to using JS for the front end instead of a
+locally running client. This is a small class which handles the loading and
+actual playing of music in the collaborative editor. It allows tracks to be
+strung together and played on a player. The closest thing to this in the original
+design would be the ClientLogic class, which originally had methods for
+playing compositions, but would not work in a form we could implement fast
+enough for the scope of this class. Thus, we did this instead.
 """
 
 from pygame import mixer

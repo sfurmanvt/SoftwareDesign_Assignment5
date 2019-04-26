@@ -28,6 +28,8 @@ Code matching our detailed class diagram is found within the BackEnd Directory.
 
 The 25 unit tests are executed to test backend methods.
 
+Differenes between class diagram and backend code can be found at the top of each backend file.
+
 Front End directory is used for the demonstration of our product.
 
 <h1>Running Tests</h1>
