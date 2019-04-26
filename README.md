@@ -73,4 +73,6 @@ Our validation tests for the frontend portion of the code include:
 
 <h1>Frontend Demonstration</h1>
 
-In order to run the frontend
+In order to run the frontend, run the command "pip install -r requirements.txt" from the root folder.  Then, navigate to the "frontend" folder and run the command "python manage.py runserver".  The site will appear at "localhost:8000".  
+
+You must login using the credentials "mozart" "password", or create an account if you'd like. You can then navigate to the composition using the link at the center of the profile, or in the dropdown of the header.  From the composition page, you are able to add, edit, and delete comments on Mozart's symphony. 
